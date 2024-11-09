@@ -1,55 +1,38 @@
+// изначальный state для героев
 const initialState = {
     heroes: [],
-    heroesLoadingStatus: 'idle',
-    filters: [],
-    filtersLoadingStatus: 'idle',
-    activeFilter: 'all'
+    heroesLoadingStatus: 'idle'
 }
 
-const reducer = (state = initialState, action) => {
+// функция reducer 
+const heroes = (state = initialState, action) => {
     switch (action.type) {
+        //загрузка 
         case 'HEROES_FETCHING':
             return {
                 ...state,
                 heroesLoadingStatus: 'loading'
             }
+        // успешная загрузка
         case 'HEROES_FETCHED':
             return {
                 ...state,
                 heroes: action.payload,
                 heroesLoadingStatus: 'idle'
             }
+        // ошибка 
         case 'HEROES_FETCHING_ERROR':
             return {
                 ...state,
                 heroesLoadingStatus: 'error'
             }
-        case 'FILTERS_FETCHING':
-            return {
-                ...state,
-                filtersLoadingStatus: 'loading'
-            }
-        case 'FILTERS_FETCHED':
-            return {
-                ...state,
-                filters: action.payload,
-                filtersLoadingStatus: 'idle'
-            }
-        case 'FILTERS_FETCHING_ERROR':
-            return {
-                ...state,
-                filtersLoadingStatus: 'error'
-            }
-        case 'FILTER_ACTIVE_CHANGE':
-            return {
-                ...state,
-                activeFilter: action.payload
-            }
+        // создание нового героя
         case 'HERO_CREATED':
             return {
                 ...state,
                 heroes: [...state.heroes, action.payload]
             }
+        // удаление героя
         case 'HERO_DELETE':
             return {
                 ...state,
@@ -59,4 +42,4 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-export default reducer;
+export default heroes;

@@ -11,15 +11,18 @@ import Spinner from '../spinner/Spinner';
 // Представьте, что вы попросили бэкенд-разработчика об этом
 
 const HeroesFilters = () => {
-    const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state);
+    // получение состояния о фильтрах
+    const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
     const dispatch = useDispatch();
 
+    // статус загрузки фильтров
     if (filtersLoadingStatus === 'loading') {
         return <Spinner/>
     } else if (filtersLoadingStatus === 'erroe') {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
 
+    // формирование триггеров по фильтрам
     const renderBtns = (filters) => {
         if (filters.length === 0) return <h5 className="text-center mt-5">Фильтры не найдены</h5>
 

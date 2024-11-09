@@ -18,7 +18,7 @@ import { v4 as uuidv4} from 'uuid';
 const HeroesAddForm = () => {
     const {request} = useHttp();
     const dispatch = useDispatch();
-    const {filters, filtersLoadingStatus} = useSelector(state => state);
+    const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
 
     //локальные состояния для контроля формы
     const [heroName, setHeroName] = useState('');
@@ -39,18 +39,20 @@ const HeroesAddForm = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
 
+        // формирование информации о новом герое
         const newHero = {
             id: uuidv4(),
             name: heroName,
             description: heroDescr,
             element: heroElement
         }
-
+        // отправка данных
         request('http://localhost:3001/heroes', 'POST', JSON.stringify(newHero))
             .then(data => console.log(data, "Успешно"))
             .then(() => dispatch(createdHero(newHero)))
             .catch((e) => console.log(e))
             .finally(() => {
+                // отчиска формы
                 setHeroName('');
                 setHeroDescr('');
                 setHeroElement('');
