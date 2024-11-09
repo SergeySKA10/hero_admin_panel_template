@@ -32,13 +32,13 @@ const HeroesList = () => {
     // получаем отфильтрованный массив героев
     const filteredHeroes = useSelector(filteredHeroesSelector);
     // состояние загрузки фильтров
-    const heroesLoadingStatus = useSelector(state => state.filters.heroesLoadingStatus);
+    const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
     // отправляем запрос на получение списка героев
     useEffect(() => {
-        dispatch(heroesFetching());
+        dispatch('HEROES_FETCHING');
         request("http://localhost:3001/heroes")
             .then(data => dispatch(heroesFetched(data)))
             .catch(() => dispatch(heroesFetchingError()))
