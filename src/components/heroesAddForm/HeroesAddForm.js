@@ -1,7 +1,7 @@
 import { useHttp } from "../../hooks/http.hook";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filtersFetching, filtersFetched, filtersFetchingError, createdHero } from "../../actions";
+import { fetchFilters, createdHero } from "../../actions";
 import { v4 as uuidv4} from 'uuid';
 
 // Задача для этого компонента:
@@ -27,10 +27,7 @@ const HeroesAddForm = () => {
 
     useEffect(() => {
         // получение данных для рендера фильтров 
-        dispatch(filtersFetching());
-        request("http://localhost:3001/filters")
-            .then(data => dispatch(filtersFetched(data)))
-            .catch(() => dispatch(filtersFetchingError()))
+        dispatch(fetchFilters(request));
 
         // eslint-disable-next-line
     }, []);
