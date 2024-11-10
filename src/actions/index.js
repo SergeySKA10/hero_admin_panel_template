@@ -51,8 +51,6 @@ export const filtersFetchingError = () => {
     }
 }
 
-// используем redux-thunk чтобы сделать переключение активного фильтра с задержкой
-// dispatch приходит автоматически при помощи redux-thunk
 export const changeActiveFilter = (filter) => {
     return {
         type: 'FILTER_ACTIVE_CHANGE',
