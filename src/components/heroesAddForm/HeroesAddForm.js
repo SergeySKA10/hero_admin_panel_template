@@ -1,7 +1,8 @@
 import { useHttp } from "../../hooks/http.hook";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFilters, createdHero } from "../../actions";
+import { fetchFilters } from "../../actions";
+import { createdHero } from '../heroesList/heroesSlice';
 import { v4 as uuidv4} from 'uuid';
 
 // Задача для этого компонента:

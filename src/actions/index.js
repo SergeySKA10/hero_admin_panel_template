@@ -1,4 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
+import { heroesFetching, heroesFetched, heroesFetchingError} from '../components/heroesList/heroesSlice';
 
 // создадим общую функцию action по получению списка героев с бд с помощью redux-thunk
 export const fetchHeroes = (request) => (dispatch) => {
@@ -15,7 +16,7 @@ export const fetchHeroes = (request) => (dispatch) => {
 // }
 
 // с помощью createAction создадим action (базовое применение) 
-export const heroesFetching = createAction('HEROES_FETCHING');
+// export const heroesFetching = createAction('HEROES_FETCHING');
 
 // export const heroesFetched = (heroes) => {
 //     return {
@@ -24,7 +25,7 @@ export const heroesFetching = createAction('HEROES_FETCHING');
 //     }
 // }
 
-export const heroesFetched = createAction('HEROES_FETCHED');
+// export const heroesFetched = createAction('HEROES_FETCHED');
 
 // export const heroesFetchingError = () => {
 //     return {
@@ -32,7 +33,7 @@ export const heroesFetched = createAction('HEROES_FETCHED');
 //     }
 // }
 
-export const heroesFetchingError = createAction('HEROES_FETCHING_ERROR');
+// export const heroesFetchingError = createAction('HEROES_FETCHING_ERROR');
 
 // общая функция action по получению фильтров
 export const fetchFilters = (request) => (dispatch) => {
@@ -75,7 +76,7 @@ export const changeActiveFilter = (filter) => {
 //     }
 // }
 
-export const createdHero = createAction('HERO_CREATED');
+// export const createdHero = createAction('HERO_CREATED');
 
 // export const deleteHero = (id) => {
 //     return {
@@ -84,4 +85,4 @@ export const createdHero = createAction('HERO_CREATED');
 //     }
 // }
 
-export const deleteHero = createAction('HERO_DELETE');
+// export const deleteHero = createAction('HERO_DELETE');
