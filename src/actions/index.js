@@ -1,4 +1,6 @@
-// создадим общую функцию по получению списка героев с бд с помощью redux-thunk
+import { createAction } from "@reduxjs/toolkit";
+
+// создадим общую функцию action по получению списка героев с бд с помощью redux-thunk
 export const fetchHeroes = (request) => (dispatch) => {
     dispatch(heroesFetching());
         request("http://localhost:3001/heroes")
@@ -6,25 +8,33 @@ export const fetchHeroes = (request) => (dispatch) => {
             .catch(() => dispatch(heroesFetchingError()))
 }
 
-export const heroesFetching = () => {
-    return {
-        type: 'HEROES_FETCHING'
-    }
-}
+// export const heroesFetching = () => {
+//     return {
+//         type: 'HEROES_FETCHING'
+//     }
+// }
 
-export const heroesFetched = (heroes) => {
-    return {
-        type: 'HEROES_FETCHED',
-        payload: heroes
-    }
-}
+// с помощью createAction создадим action (базовое применение) 
+export const heroesFetching = createAction('HEROES_FETCHING');
 
-export const heroesFetchingError = () => {
-    return {
-        type: 'HEROES_FETCHING_ERROR'
-    }
-}
+// export const heroesFetched = (heroes) => {
+//     return {
+//         type: 'HEROES_FETCHED',
+//         payload: heroes
+//     }
+// }
 
+export const heroesFetched = createAction('HEROES_FETCHED');
+
+// export const heroesFetchingError = () => {
+//     return {
+//         type: 'HEROES_FETCHING_ERROR'
+//     }
+// }
+
+export const heroesFetchingError = createAction('HEROES_FETCHING_ERROR');
+
+// общая функция action по получению фильтров
 export const fetchFilters = (request) => (dispatch) => {
     dispatch(filtersFetching());
         request("http://localhost:3001/filters")
@@ -58,16 +68,20 @@ export const changeActiveFilter = (filter) => {
     }
 }
 
-export const createdHero = (data) => {
-    return {
-        type: 'HERO_CREATED',
-        payload: data
-    }
-}
+// export const createdHero = (data) => {
+//     return {
+//         type: 'HERO_CREATED',
+//         payload: data
+//     }
+// }
 
-export const deleteHero = (id) => {
-    return {
-        type: 'HERO_DELETE',
-        payload: id
-    }
-}
+export const createdHero = createAction('HERO_CREATED');
+
+// export const deleteHero = (id) => {
+//     return {
+//         type: 'HERO_DELETE',
+//         payload: id
+//     }
+// }
+
+export const deleteHero = createAction('HERO_DELETE');
