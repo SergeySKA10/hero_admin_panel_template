@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { changeActiveFilter } from '../../actions/index';
+import { changeActiveFilter } from '../heroesAddForm/filtresSlice';
 import classNames from "classnames";
 
 import Spinner from '../spinner/Spinner';
