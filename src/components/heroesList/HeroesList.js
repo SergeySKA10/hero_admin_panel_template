@@ -1,10 +1,10 @@
 import {useHttp} from '../../hooks/http.hook';
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import { fetchHeroes } from '../../actions';
+import { fetchHeroes } from './heroesSlice';
 import { deleteHero } from './heroesSlice';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
@@ -16,7 +16,6 @@ import './HeroesList.scss';
 // Удаление идет и с json файла при помощи метода DELETE
 
 const HeroesList = () => {
-
     // создадим функцию селектор
     const filteredHeroesSelector = createSelector(
         state => state.filters.activeFilter, // это первое состояние - активный фильтр который дальше назовем filter
@@ -39,7 +38,7 @@ const HeroesList = () => {
 
     // отправляем запрос на получение списка героев
     useEffect(() => {
-        dispatch(fetchHeroes(request))
+        dispatch(fetchHeroes())
 
         // eslint-disable-next-line
     }, []);
