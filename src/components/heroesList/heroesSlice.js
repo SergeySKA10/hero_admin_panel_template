@@ -1,10 +1,18 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 import { useHttp } from '../../hooks/http.hook';
 
-const initialState = {
-    heroes: [],
+// создадим адаптер для CRUD операций с state
+const heroesAdapter = createEntityAdapter();
+
+// начальный state
+// const initialState = {
+//     heroes: [],
+//     heroesLoadingStatus: 'idle'
+// }
+
+const initialState = heroesAdapter.getInitialState({
     heroesLoadingStatus: 'idle'
-}
+});
 
 export const fetchHeroes = createAsyncThunk(
     //тип действия
@@ -23,10 +31,12 @@ const heroesSlice = createSlice({
     initialState,
     reducers: {
         createdHero: (state, action) => {
-            state.heroes.push(action.payload);
+            // state.heroes.push(action.payload);
+            heroesAdapter.addOne(state, action.payload);
         },
         deleteHero: (state, action) => {
-            state.heroes = state.heroes.filter(el => el.id !== action.payload);
+            // state.heroes = state.heroes.filter(el => el.id !== action.payload);
+            heroesAdapter.removeOne(state, action.payload)
         }
     },
     // записываем сюда actionCreators которые мы ожидаем в качестве ответа на промис fetchHeroes
@@ -37,7 +47,9 @@ const heroesSlice = createSlice({
             })
             .addCase(fetchHeroes.fulfilled, (state, action) => {
                 state.heroesLoadingStatus = 'idle';
-                state.heroes = action.payload;
+                // state.heroes = action.payload; записываем полученные данные в state
+                heroesAdapter.setAll(state, action.payload); // метод установки (или полной замены) 1 аргумент - куда помещаем 2 аогумент что поместить
+
             })
             .addCase(fetchHeroes.rejected, state=> {
                 state.heroesLoadingStatus = 'error'
@@ -57,3 +69,6 @@ export const {
     createdHero,
     deleteHero
 } = actions;
+
+// экспорт selectors
+export const {selectAll} = heroesAdapter.getSelectors(state => state.heroes);

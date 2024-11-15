@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import { fetchHeroes } from './heroesSlice';
-import { deleteHero } from './heroesSlice';
+import { deleteHero, fetchHeroes, selectAll } from './heroesSlice';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 import './HeroesList.scss';
@@ -19,7 +18,7 @@ const HeroesList = () => {
     // создадим функцию селектор
     const filteredHeroesSelector = createSelector(
         state => state.filters.activeFilter, // это первое состояние - активный фильтр который дальше назовем filter
-        state => state.heroes.heroes, // второе состояние - список героев далее heroes 
+        selectAll, // второе состояние - список героев далее heroes созданный с помощью createEntityAdapter
         (filter, heroes) => {
             if (filter === 'all') {
                 return heroes
