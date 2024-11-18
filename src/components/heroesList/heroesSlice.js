@@ -4,12 +4,6 @@ import { useHttp } from '../../hooks/http.hook';
 // создадим адаптер для CRUD операций с state
 const heroesAdapter = createEntityAdapter();
 
-// начальный state
-// const initialState = {
-//     heroes: [],
-//     heroesLoadingStatus: 'idle'
-// }
-
 const initialState = heroesAdapter.getInitialState({
     heroesLoadingStatus: 'idle'
 });

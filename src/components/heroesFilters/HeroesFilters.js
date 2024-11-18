@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { changeActiveFilter, selectAll } from '../heroesAddForm/filtresSlice';
+import store from "../../store";
 import classNames from "classnames";
 
 import Spinner from '../spinner/Spinner';
@@ -12,7 +13,7 @@ import Spinner from '../spinner/Spinner';
 
 const HeroesFilters = () => {
     // получение фильтров
-    const filters = useSelector(selectAll);
+    const filters = selectAll(store.getState());
     const {filtersLoadingStatus, activeFilter } = useSelector(state => state.filters);
 
     const dispatch = useDispatch();

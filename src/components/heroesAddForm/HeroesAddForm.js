@@ -5,6 +5,7 @@ import { fetchFilters } from "./filtresSlice";
 import { createdHero } from '../heroesList/heroesSlice';
 import { v4 as uuidv4} from 'uuid';
 import { selectAll } from "./filtresSlice";
+import store from '../../store/index';
 
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
@@ -22,7 +23,7 @@ const HeroesAddForm = () => {
     const dispatch = useDispatch();
 
     // формирование фильтров
-    const filters = useSelector(selectAll);
+    const filters = selectAll(store.getState());
     const { filtersLoadingStatus } = useSelector(state => state.filters);
 
     //локальные состояния для контроля формы
