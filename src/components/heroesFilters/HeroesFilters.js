@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { changeActiveFilter } from '../heroesAddForm/filtresSlice';
+import { changeActiveFilter, selectAll } from '../heroesAddForm/filtresSlice';
 import classNames from "classnames";
 
 import Spinner from '../spinner/Spinner';
@@ -11,8 +11,10 @@ import Spinner from '../spinner/Spinner';
 // Представьте, что вы попросили бэкенд-разработчика об этом
 
 const HeroesFilters = () => {
-    // получение состояния о фильтрах
-    const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
+    // получение фильтров
+    const filters = useSelector(selectAll);
+    const {filtersLoadingStatus, activeFilter } = useSelector(state => state.filters);
+
     const dispatch = useDispatch();
 
     // статус загрузки фильтров
@@ -22,7 +24,7 @@ const HeroesFilters = () => {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
 
-    // формирование триггеров по фильтрам
+    // // формирование триггеров по фильтрам
     const renderBtns = (filters) => {
         if (filters.length === 0) return <h5 className="text-center mt-5">Фильтры не найдены</h5>
 

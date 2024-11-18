@@ -1,9 +1,10 @@
 import { useHttp } from "../../hooks/http.hook";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFilters } from "../../actions";
+import { fetchFilters } from "./filtresSlice";
 import { createdHero } from '../heroesList/heroesSlice';
 import { v4 as uuidv4} from 'uuid';
+import { selectAll } from "./filtresSlice";
 
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
@@ -19,7 +20,10 @@ import { v4 as uuidv4} from 'uuid';
 const HeroesAddForm = () => {
     const {request} = useHttp();
     const dispatch = useDispatch();
-    const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
+
+    // формирование фильтров
+    const filters = useSelector(selectAll);
+    const { filtersLoadingStatus } = useSelector(state => state.filters);
 
     //локальные состояния для контроля формы
     const [heroName, setHeroName] = useState('');
@@ -28,7 +32,7 @@ const HeroesAddForm = () => {
 
     useEffect(() => {
         // получение данных для рендера фильтров 
-        dispatch(fetchFilters(request));
+        dispatch(fetchFilters());
 
         // eslint-disable-next-line
     }, []);

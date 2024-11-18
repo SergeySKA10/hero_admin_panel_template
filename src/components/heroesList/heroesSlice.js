@@ -14,6 +14,7 @@ const initialState = heroesAdapter.getInitialState({
     heroesLoadingStatus: 'idle'
 });
 
+// создадим actionCreator для получения героев из бд
 export const fetchHeroes = createAsyncThunk(
     //тип действия
     'heroes/fetchHeroes',

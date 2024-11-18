@@ -1,30 +1,43 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
+import { useHttp } from "../../hooks/http.hook";
 
-// изначальный state для фильтров
-const initialState = {
-    filters: [],
-    filtersLoadingStatus: 'idle',
-    activeFilter: 'all'
-}
+// создадим адаптер для фильтров
+ export const filtersAdapter = createEntityAdapter();
+
+// создадим actionCreator для получения фильтров из бд
+export const fetchFilters = createAsyncThunk(
+    'filters/fetchFilters',
+    async () => {
+        const { request } = useHttp();
+        return await request("http://localhost:3001/filters")
+    }
+)
 
 // создание actions и reducer для filtres 
 const filtersSlice = createSlice({
     name: 'filters',
-    initialState,
+    initialState: filtersAdapter.getInitialState({
+        filtersLoadingStatus: 'idle',
+        activeFilter: 'all'
+    }),
     reducers: {
-        filtersFetching: state => {
-            state.filtersLoadingStatus = 'loading';
-        },
-        filtersFetched: (state, action) => {
-            state.filtersLoadingStatus = 'idle';
-            state.filters = action.payload;
-        },
-        filtersFetchingError: state => {
-            state.filtersLoadingStatus = 'error';
-        },
         changeActiveFilter: (state, action) => {
-            state.activeFilter = action.payload
+            state.activeFilter = action.payload;
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchFilters.pending, state => {
+                state.filtersLoadingStatus = 'loading';
+            })
+            .addCase(fetchFilters.fulfilled, (state, action) => {
+                state.filtersLoadingStatus = 'idle';
+                filtersAdapter.setAll(state, action.payload)
+            })
+            .addCase(fetchFilters.rejected, state => {
+                state.filtersLoadingStatus = 'error';
+            })
+            .addDefaultCase(() => {})
     }
 });
 
@@ -39,4 +52,6 @@ export const {
     filtersFetchingError,
     changeActiveFilter
 } = actions;
+
+export const { selectAll } = filtersAdapter.getSelectors(state => state.filters);
 
